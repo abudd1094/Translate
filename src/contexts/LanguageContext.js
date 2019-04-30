@@ -1,7 +1,23 @@
 import React from 'react';
 
-const context = React.createContext('english');
+const Context = React.createContext('english');
 
-console.log(context);
+export class LanguageStore extends React.Component {
+  state = { language: 'english' };
 
-export default context;
+  onLanguageChange = language => {
+    this.setState({ language });
+  }
+
+  render() {
+    return( 
+      // adding all current values from state object as well as the method onLanguageChange into the Provider's value object --> now in imported this.context instances we have access to the state and method
+      <Context.Provider value={{ ...this.state, onLanguageChange: this.onLanguageChange }}> 
+        {this.props.children}
+      </Context.Provider>
+    )
+  }
+}
+
+export default Context;
+
